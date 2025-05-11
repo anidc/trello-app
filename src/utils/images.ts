@@ -12,6 +12,10 @@ import profile from "../assets/images/profile.svg";
 import settings from "../assets/images/settings.svg";
 import stats from "../assets/images/stats.svg";
 import avatar4 from "../assets/images/Avatar4.png";
+import planet from "../assets/images/planet.svg";
+import separator from "../assets/images/separator.svg";
+import searchIcon from "../assets/images/search-icon.svg";
+import backIcon from "../assets/images/back-icon.svg";
 
 export {
   avatar1,
@@ -28,4 +32,8 @@ export {
   settings,
   stats,
   avatar4,
+  planet,
+  separator,
+  searchIcon,
+  backIcon,
 };
