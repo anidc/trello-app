@@ -4,6 +4,7 @@ import { taskReducer, initialState } from "./context/TaskReducer";
 import { Box, CssBaseline } from "@mui/material";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   const [state, dispatch] = useReducer(taskReducer, initialState);
@@ -49,29 +50,38 @@ export default function App() {
     <>
       <Sidebar />
       <CssBaseline />
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Box
-          sx={{
-            display: "grid",
-            gap: 2,
-            padding: 2,
-            marginLeft: { md: "80px" },
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "1fr 1fr",
-              md: "1fr 1fr 1fr",
-            },
-          }}
-        >
-          <Column title="To Do" tasks={grouped.todo} droppableId="todo" />
-          <Column
-            title="In Progress"
-            tasks={grouped.inprogress}
-            droppableId="inprogress"
-          />
-          <Column title="Done" tasks={grouped.done} droppableId="done" />
-        </Box>
-      </DragDropContext>
+      <Box sx={{ marginLeft: { md: "80px" } }}>
+        <Navbar />
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Box
+            sx={{
+              display: "grid",
+              gap: 2,
+              padding: 4,
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "1fr 1fr",
+                md: "1fr 1fr 1fr",
+              },
+              "@media screen and (min-width: 1440px)": {
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "start",
+                justifyContent: "start",
+                flexWrap: "wrap",
+              },
+            }}
+          >
+            <Column title="To Do" tasks={grouped.todo} droppableId="todo" />
+            <Column
+              title="In Progress"
+              tasks={grouped.inprogress}
+              droppableId="inprogress"
+            />
+            <Column title="Done" tasks={grouped.done} droppableId="done" />
+          </Box>
+        </DragDropContext>
+      </Box>
     </>
   );
 }

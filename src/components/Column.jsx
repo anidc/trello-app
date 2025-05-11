@@ -26,6 +26,9 @@ const Column = ({ title, tasks, droppableId }) => {
         backgroundColor: "#F8FAFC",
         border: "1px solid #E2E8F0",
         borderRadius: 8,
+        "@media screen and (min-width: 960px)": {
+          maxWidth: 416,
+        },
       }}
     >
       <Box
