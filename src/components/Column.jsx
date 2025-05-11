@@ -1,23 +1,62 @@
 import React from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { Droppable } from "@hello-pangea/dnd";
 import TaskCard from "./TaskCard";
+import AddIcon from "@mui/icons-material/Add";
 
+const getDotColor = (title) => {
+  switch (title.toLowerCase()) {
+    case "to do":
+      return "#4F46E5";
+    case "in progress":
+      return "#F59E0B";
+    case "done":
+      return "#22C55E";
+    default:
+      return "#4F46E5";
+  }
+};
 const Column = ({ title, tasks, droppableId }) => {
   return (
     <Paper
-      elevation={3}
       sx={{
         p: 2,
+        height: "max-content",
         minHeight: "400px",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#F8FAFC",
         border: "1px solid #E2E8F0",
         borderRadius: 8,
       }}
     >
-      <Typography variant="h6" mb={2} sx={{ fontWeight: 900 }}>
-        {title} <span style={{ color: "#94A3B8" }}>({tasks.length})</span>
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
+        <Typography variant="h6" sx={{ fontWeight: 900 }}>
+          <span
+            style={{
+              color: getDotColor(title),
+              marginRight: "5px",
+            }}
+          >
+            •
+          </span>{" "}
+          {title} <span style={{ color: "#94A3B8" }}>({tasks.length})</span>
+        </Typography>
+        <IconButton
+          sx={{
+            border: "1px solid #E2E8F0",
+            borderRadius: "50%",
+          }}
+          aria-label="add task"
+        >
+          <AddIcon />
+        </IconButton>
+      </Box>
       <Droppable droppableId={droppableId}>
         {(provided) => (
           <Box
