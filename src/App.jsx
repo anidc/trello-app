@@ -3,6 +3,7 @@ import Column from "./components/Column";
 import { taskReducer, initialState } from "./context/TaskReducer";
 import { Box, CssBaseline } from "@mui/material";
 import { DragDropContext } from "@hello-pangea/dnd";
+import Sidebar from "./components/Sidebar";
 
 export default function App() {
   const [state, dispatch] = useReducer(taskReducer, initialState);
@@ -46,6 +47,7 @@ export default function App() {
 
   return (
     <>
+      <Sidebar />
       <CssBaseline />
       <DragDropContext onDragEnd={handleDragEnd}>
         <Box
@@ -53,6 +55,7 @@ export default function App() {
             display: "grid",
             gap: 2,
             padding: 2,
+            marginLeft: { md: "80px" },
             gridTemplateColumns: {
               xs: "1fr",
               sm: "1fr 1fr",
