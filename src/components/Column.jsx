@@ -10,7 +10,7 @@ const getDotColor = (title) => {
       return "#4F46E5";
     case "in progress":
       return "#F59E0B";
-    case "done":
+    case "completed":
       return "#22C55E";
     default:
       return "#4F46E5";
@@ -29,8 +29,8 @@ const Column = ({ title, tasks, droppableId, onOpenNewTaskModal, status }) => {
         "@media screen and (min-width: 960px)": {
           maxWidth: 416,
         },
-        "@media screen and (min-width: 1400px)": {
-          minWidth: 400,
+        "@media screen and (min-width: 1500px)": {
+          minWidth: 416,
         },
       }}
     >
@@ -46,7 +46,7 @@ const Column = ({ title, tasks, droppableId, onOpenNewTaskModal, status }) => {
           <span
             style={{
               color: getDotColor(title),
-              marginRight: "5px",
+              // marginRight: "5px",
             }}
           >
             •

@@ -67,7 +67,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
             fontWeight: 700,
           },
           "& .MuiBreadcrumbs-separator": {
-            margin: "0 16px",
+            margin: "0 14px",
           },
         }}
       >
@@ -82,7 +82,11 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
             href="#"
             sx={{ display: "flex" }}
           >
-            <img src={IMAGES.home} alt="home" />
+            <img
+              style={{ marginLeft: "6px", marginRight: "5px", width: "20px" }}
+              src={IMAGES.home}
+              alt="home"
+            />
           </Link>
           <Link underline="hover" color="#475569" href="#">
             Dashboard
@@ -92,7 +96,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
           </Link>
           <Typography
             color="primary"
-            sx={{ display: "flex", alignItems: "center", gap: "5px" }}
+            sx={{ display: "flex", alignItems: "center", gap: "4px" }}
           >
             <img src={IMAGES.planet} alt="planet" /> Project PlanetX
           </Typography>
@@ -123,7 +127,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
               justifyContent: "left",
               fontSize: "0.875rem",
               lineHeight: 1.42,
-              margin: "0 8px",
+              margin: "0 6px",
             }}
           >
             {visibleAvatars.map((src, index) => (
@@ -132,7 +136,9 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                 src={src}
                 alt={`avatar-${index}`}
                 sx={{
-                  marginLeft: index === 0 ? 0 : "-11px",
+                  marginLeft: index === 0 ? 0 : "-14px",
+                  width: "42px",
+                  height: "42px",
                 }}
               />
             ))}
@@ -166,6 +172,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
               border: "1px solid #E2E8F0",
               borderRadius: "24px",
               "&:hover": { boxShadow: "none" },
+              "& .MuiButton-endIcon": { marginRight: 0 },
             }}
           >
             Invite
@@ -175,7 +182,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
       <Box
         sx={{
           padding: { xs: 2, md: 4 },
-          paddingBottom: { xs: 0, md: 4 },
+          paddingBottom: { xs: 0, md: "20px" },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "center",
@@ -212,13 +219,20 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h4" sx={{ fontSize: "30px", fontWeight: 900 }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: "30px",
+                fontWeight: 900,
+                letterSpacing: "-0.4px",
+              }}
+            >
               Project PlanetX
             </Typography>
             <Box
               sx={{
                 display: "flex",
-                gap: 2,
+                gap: "20px",
                 color: "#475569",
                 mt: { xs: 2, md: 0 },
               }}
@@ -229,7 +243,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                   alignItems: "center",
                   fontSize: "14px",
                   fontWeight: 700,
-                  gap: 0.5,
+                  gap: "5px",
                 }}
               >
                 <img src={IMAGES.grid} alt="grid" />
@@ -241,7 +255,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                   alignItems: "center",
                   fontSize: "14px",
                   fontWeight: 700,
-                  gap: 0.5,
+                  gap: "5px",
                 }}
               >
                 <img src={IMAGES.sliders} alt="sliders" />
@@ -252,8 +266,9 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                   display: "flex",
                   alignItems: "center",
                   fontSize: "14px",
+                  lineHeight: 1.42,
                   fontWeight: 700,
-                  gap: 0.5,
+                  gap: "5px",
                 }}
               >
                 <img src={IMAGES.sortDescending} alt="sort" />
@@ -287,11 +302,12 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                   fontSize: "0.875rem",
                   lineHeight: 1.42,
                   fontWeight: 700,
-                  padding: "10px 20px",
+                  padding: "10px 16px",
                   boxShadow: "none",
                   "&:hover": {
                     boxShadow: "none",
                   },
+                  "& .MuiButton-icon": { marginLeft: 0 },
                 }}
               >
                 Grid View
@@ -307,18 +323,19 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                   fontSize: "0.875rem",
                   lineHeight: 1.42,
                   fontWeight: 700,
-                  padding: "10px 20px",
-                  boxShadow: "0, 4, 8, -2,rgba(23, 23, 23, 0.1)",
+                  padding: "10px 16px",
+                  boxShadow: "0 4px 8px -2px rgba(23,23,23,0.1)",
                   "&:hover": {
                     boxShadow: "none",
                   },
+                  "& .MuiButton-icon": { marginLeft: 0 },
                 }}
               >
                 List View
               </Button>
               <Button
                 variant="contained"
-                startIcon={<img src={IMAGES.grid} alt="export" />}
+                startIcon={<img src={IMAGES.columns} alt="export" />}
                 sx={{
                   backgroundColor: "transparent",
                   color: "#475569",
@@ -327,18 +344,19 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                   fontSize: "0.875rem",
                   lineHeight: 1.42,
                   fontWeight: 700,
-                  padding: "10px 20px",
+                  padding: "10px 16px",
                   boxShadow: "none",
                   "&:hover": {
                     boxShadow: "none",
                   },
+                  "& .MuiButton-icon": { marginLeft: 0 },
                 }}
               >
                 Column View
               </Button>
               <Button
                 variant="contained"
-                startIcon={<img src={IMAGES.grid} alt="export" />}
+                startIcon={<img src={IMAGES.rows} alt="export" />}
                 sx={{
                   backgroundColor: "transparent",
                   color: "#475569",
@@ -347,11 +365,12 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                   fontSize: "0.875rem",
                   lineHeight: 1.42,
                   fontWeight: 700,
-                  padding: "10px 20px",
+                  padding: "10px 16px",
                   boxShadow: "none",
                   "&:hover": {
                     boxShadow: "none",
                   },
+                  "& .MuiButton-icon": { marginLeft: 0 },
                 }}
               >
                 Row View
@@ -366,9 +385,11 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                 textTransform: "capitalize",
                 fontSize: "1rem",
                 fontWeight: 700,
-                padding: "10px 20px",
+                lineHeight: 1.375,
+                padding: "13px 22px",
                 boxShadow: "none",
                 "&:hover": { backgroundColor: "#4F46E5", boxShadow: "none" },
+                "& .MuiButton-icon": { marginRight: 0 },
               }}
             >
               Export Data

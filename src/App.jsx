@@ -113,7 +113,7 @@ export default function App() {
           <Box
             sx={{
               display: "grid",
-              gap: 2,
+              gap: 3,
               padding: { xs: 2, md: 4 },
               paddingTop: { xs: 4 },
               gridTemplateColumns: {
@@ -145,7 +145,7 @@ export default function App() {
               status="inprogress"
             />
             <Column
-              title="Done"
+              title="Completed"
               tasks={grouped.done}
               droppableId="done"
               onOpenNewTaskModal={handleOpenModal}

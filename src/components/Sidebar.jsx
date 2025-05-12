@@ -43,10 +43,10 @@ const Sidebar = ({ open, toggleDrawer }) => {
       }}
     >
       <Box>
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: "20px" }}>
           <img src={IMAGES.logo} alt="logo" />
         </Box>
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: "6px" }}>
           <List>
             {MENU_LIST.map((menu, index) => (
               <ListItem disablePadding sx={{ paddingBottom: 2 }} key={index}>
@@ -57,7 +57,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                       "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
                       backgroundColor:
                         menu.link == window.location.pathname
-                          ? "rgba(0, 0, 0, 0.04)"
+                          ? "#F8FAFC"
                           : "transparent",
                     }}
                   >
@@ -77,7 +77,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
         <List>
           <ListItem
             disablePadding
-            sx={{ paddingBottom: 2, justifyContent: "center" }}
+            sx={{ paddingBottom: "12px", justifyContent: "center" }}
           >
             <ListItemIcon sx={{ minWidth: 0 }}>
               <IconButton
