@@ -6,6 +6,7 @@ import { DragDropContext } from "@hello-pangea/dnd";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import NewTaskModal from "./components/NewTaskModal";
+import OfflineBanner from "./components/OfflineBanner";
 
 export default function App() {
   const [state, dispatch] = useReducer(taskReducer, [], () => {
@@ -104,6 +105,7 @@ export default function App() {
     <>
       <Sidebar open={open} toggleDrawer={toggleDrawer} />
       <CssBaseline />
+      <OfflineBanner />
       <Box sx={{ marginLeft: { md: "80px" } }}>
         <Navbar
           tasksLen={state.tasks.length}

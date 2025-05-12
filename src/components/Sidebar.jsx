@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Drawer,
   List,
@@ -89,7 +90,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                 }}
                 aria-label="add task"
               >
-                <img src={IMAGES.avatar4} alt="settings" />
+                <img src={IMAGES.avatar4} alt="profile" />
               </IconButton>
             </ListItemIcon>
           </ListItem>
