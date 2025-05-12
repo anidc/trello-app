@@ -12,8 +12,9 @@ import {
 import * as IMAGES from "../utils/images";
 import AVATARS from "../utils/avatars";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
-const Navbar = () => {
+const Navbar = ({ open, toggleDrawer }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -22,6 +23,30 @@ const Navbar = () => {
 
   return (
     <>
+      <Box
+        sx={{
+          display: { xs: "flex", md: "none" },
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: 2,
+          paddingBottom: 1,
+          paddingTop: 1,
+        }}
+      >
+        <img src={IMAGES.nameLogo} alt="logo" />
+        <IconButton onClick={toggleDrawer}>
+          <img
+            src={IMAGES.hamburger}
+            alt="hamburger"
+            style={{
+              width: "24px",
+              height: "24px",
+              display: open ? "none" : "block",
+            }}
+          />
+          <CloseIcon sx={{ display: open ? "block" : "none" }} />
+        </IconButton>
+      </Box>
       <Box
         sx={{
           backgroundColor: "#F8FAFC",

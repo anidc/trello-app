@@ -1,7 +1,7 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Column from "./components/Column";
 import { taskReducer, initialState } from "./context/TaskReducer";
-import { Box, CssBaseline } from "@mui/material";
+import { Box, CssBaseline, useMediaQuery, useTheme } from "@mui/material";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
@@ -46,18 +46,35 @@ export default function App() {
     });
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [open, setOpen] = useState(!isSmallScreen);
+
+  useEffect(() => {
+    if (isSmallScreen) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }, [isSmallScreen]);
+
+  const toggleDrawer = () => {
+    setOpen((prevState) => !prevState);
+  };
+
   return (
     <>
-      <Sidebar />
+      <Sidebar open={open} toggleDrawer={toggleDrawer} />
       <CssBaseline />
       <Box sx={{ marginLeft: { md: "80px" } }}>
-        <Navbar />
+        <Navbar open={open} toggleDrawer={toggleDrawer} />
         <DragDropContext onDragEnd={handleDragEnd}>
           <Box
             sx={{
               display: "grid",
               gap: 2,
-              padding: 4,
+              padding: { xs: 2, md: 4 },
+              paddingTop: { xs: 4 },
               gridTemplateColumns: {
                 xs: "1fr",
                 sm: "1fr 1fr",

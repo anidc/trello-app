@@ -16,6 +16,8 @@ import planet from "../assets/images/planet.svg";
 import separator from "../assets/images/separator.svg";
 import searchIcon from "../assets/images/search-icon.svg";
 import backIcon from "../assets/images/back-icon.svg";
+import nameLogo from "../assets/images/name-logo.png";
+import hamburger from "../assets/images/hamburger.svg";
 
 export {
   avatar1,
@@ -36,4 +38,6 @@ export {
   separator,
   searchIcon,
   backIcon,
+  nameLogo,
+  hamburger,
 };

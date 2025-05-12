@@ -16,16 +16,17 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 const drawerWidth = 80;
 
-const Sidebar = () => {
+const Sidebar = ({ open, toggleDrawer }) => {
   return (
     <Drawer
       variant="permanent"
       anchor="left"
+      open={open}
+      onClose={toggleDrawer}
       sx={{
         width: drawerWidth,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          left: { xs: `-${drawerWidth}px`, md: "0" },
           width: drawerWidth,
           boxSizing: "border-box",
           display: "flex",
@@ -33,6 +34,8 @@ const Sidebar = () => {
           justifyContent: "space-between",
           backgroundColor: "#ffffff",
           borderRight: "1px solid #E2E8F0",
+          transition: "transform 0.3s ease",
+          transform: open ? "translateX(0)" : "translateX(-80px)",
         },
       }}
     >
