@@ -67,7 +67,11 @@ export default function App() {
       <Sidebar open={open} toggleDrawer={toggleDrawer} />
       <CssBaseline />
       <Box sx={{ marginLeft: { md: "80px" } }}>
-        <Navbar open={open} toggleDrawer={toggleDrawer} />
+        <Navbar
+          tasksLen={state.tasks.length}
+          open={open}
+          toggleDrawer={toggleDrawer}
+        />
         <DragDropContext onDragEnd={handleDragEnd}>
           <Box
             sx={{

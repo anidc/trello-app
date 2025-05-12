@@ -14,7 +14,7 @@ import AVATARS from "../utils/avatars";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
-const Navbar = ({ open, toggleDrawer }) => {
+const Navbar = ({ tasksLen, open, toggleDrawer }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -169,6 +169,252 @@ const Navbar = ({ open, toggleDrawer }) => {
           >
             Invite
           </Button>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          padding: { xs: 2, md: 4 },
+          paddingBottom: { xs: 0, md: 4 },
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          gap: 2,
+          borderBottom: { md: "1px solid #E2E8F0" },
+        }}
+      >
+        <Box
+          component="img"
+          src={IMAGES.projectxLogo}
+          alt="logo"
+          sx={{
+            width: {
+              xs: "64px",
+              md: "96px",
+            },
+          }}
+        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            gap: "12px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h4" sx={{ fontSize: "30px", fontWeight: 900 }}>
+              Project PlanetX
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                color: "#475569",
+                mt: { xs: 2, md: 0 },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  gap: 0.5,
+                }}
+              >
+                <img src={IMAGES.grid} alt="grid" />
+                Grid View
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  gap: 0.5,
+                }}
+              >
+                <img src={IMAGES.sliders} alt="sliders" />
+                Filter
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  gap: 0.5,
+                }}
+              >
+                <img src={IMAGES.sortDescending} alt="sort" />
+                Sort
+              </Box>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-between",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#F1F5F9",
+                borderRadius: "24px",
+                padding: 0.5,
+              }}
+            >
+              <Button
+                variant="contained"
+                startIcon={<img src={IMAGES.grid} alt="export" />}
+                sx={{
+                  backgroundColor: "transparent",
+                  color: "#475569",
+                  borderRadius: "20px",
+                  textTransform: "capitalize",
+                  fontSize: "0.875rem",
+                  lineHeight: 1.42,
+                  fontWeight: 700,
+                  padding: "10px 20px",
+                  boxShadow: "none",
+                  "&:hover": {
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                Grid View
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<img src={IMAGES.list} alt="export" />}
+                sx={{
+                  backgroundColor: "#FFFFFF",
+                  color: "#1E293B",
+                  borderRadius: "20px",
+                  textTransform: "capitalize",
+                  fontSize: "0.875rem",
+                  lineHeight: 1.42,
+                  fontWeight: 700,
+                  padding: "10px 20px",
+                  boxShadow: "0, 4, 8, -2,rgba(23, 23, 23, 0.1)",
+                  "&:hover": {
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                List View
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<img src={IMAGES.grid} alt="export" />}
+                sx={{
+                  backgroundColor: "transparent",
+                  color: "#475569",
+                  borderRadius: "20px",
+                  textTransform: "capitalize",
+                  fontSize: "0.875rem",
+                  lineHeight: 1.42,
+                  fontWeight: 700,
+                  padding: "10px 20px",
+                  boxShadow: "none",
+                  "&:hover": {
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                Column View
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<img src={IMAGES.grid} alt="export" />}
+                sx={{
+                  backgroundColor: "transparent",
+                  color: "#475569",
+                  borderRadius: "20px",
+                  textTransform: "capitalize",
+                  fontSize: "0.875rem",
+                  lineHeight: 1.42,
+                  fontWeight: 700,
+                  padding: "10px 20px",
+                  boxShadow: "none",
+                  "&:hover": {
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                Row View
+              </Button>
+            </Box>
+            <Button
+              variant="contained"
+              endIcon={<img src={IMAGES.exportIcon} alt="export" />}
+              sx={{
+                display: { xs: "none", lg: "inline-flex" },
+                borderRadius: "24px",
+                textTransform: "capitalize",
+                fontSize: "1rem",
+                fontWeight: 700,
+                padding: "10px 20px",
+                boxShadow: "none",
+                "&:hover": { backgroundColor: "#4F46E5", boxShadow: "none" },
+              }}
+            >
+              Export Data
+            </Button>
+          </Box>
+          <Box sx={{ overflowX: "auto" }}>
+            <Box
+              sx={{
+                display: { xs: "flex", md: "none" },
+                minWidth: "360px",
+              }}
+            >
+              <Button
+                sx={{
+                  textTransform: "capitalize",
+                  fontWeight: 700,
+                  color: "#475569",
+                  padding: "13px 16px",
+                  borderBottom: "2px solid #CBD5E1",
+                  borderRadius: 0,
+                }}
+              >
+                By Status
+              </Button>
+              <Button
+                sx={{
+                  textTransform: "capitalize",
+                  fontWeight: 700,
+                  color: "#1E293B",
+                  padding: "13px 16px",
+                  borderBottom: "2px solid #4F46E5",
+                  borderRadius: 0,
+                }}
+              >
+                By Total Tasks ({tasksLen})
+              </Button>
+              <Button
+                sx={{
+                  textTransform: "capitalize",
+                  fontWeight: 700,
+                  color: "#475569",
+                  padding: "13px 16px",
+                  borderBottom: "2px solid #CBD5E1",
+                  borderRadius: 0,
+                }}
+              >
+                Tasks Due
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </>

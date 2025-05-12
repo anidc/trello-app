@@ -18,6 +18,14 @@ import searchIcon from "../assets/images/search-icon.svg";
 import backIcon from "../assets/images/back-icon.svg";
 import nameLogo from "../assets/images/name-logo.png";
 import hamburger from "../assets/images/hamburger.svg";
+import projectxLogo from "../assets/images/projectx-logo.png";
+import sliders from "../assets/images/sliders.svg";
+import sortDescending from "../assets/images/SortDescending.svg";
+import grid from "../assets/images/GridFour.svg";
+import exportIcon from "../assets/images/Export.svg";
+import list from "../assets/images/List.svg";
+import columns from "../assets/images/Columns.svg";
+import rows from "../assets/images/Rows.svg";
 
 export {
   avatar1,
@@ -40,4 +48,12 @@ export {
   backIcon,
   nameLogo,
   hamburger,
+  projectxLogo,
+  sliders,
+  sortDescending,
+  grid,
+  exportIcon,
+  list,
+  columns,
+  rows,
 };
