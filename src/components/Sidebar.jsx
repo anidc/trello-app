@@ -8,12 +8,14 @@ import {
   Toolbar,
   Box,
   IconButton,
+  Button,
 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import MENU_LIST from "../utils/menu";
 import * as IMAGES from "../utils/images";
 import TaskIcon from "@mui/icons-material/Checklist";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 80;
 
@@ -53,9 +55,17 @@ const Sidebar = ({ open, toggleDrawer }) => {
                     sx={{
                       borderRadius: "50%",
                       "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
+                      backgroundColor:
+                        menu.link == window.location.pathname
+                          ? "rgba(0, 0, 0, 0.04)"
+                          : "transparent",
                     }}
                   >
-                    <img src={menu.icon} alt={menu.title} />
+                    <img
+                      style={{ padding: 4 }}
+                      src={menu.icon}
+                      alt={menu.title}
+                    />
                   </IconButton>
                 </ListItemIcon>
               </ListItem>
@@ -71,11 +81,13 @@ const Sidebar = ({ open, toggleDrawer }) => {
           >
             <ListItemIcon sx={{ minWidth: 0 }}>
               <IconButton
+                component={Link}
+                to="/settings"
                 sx={{
                   borderRadius: "50%",
                   "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
                 }}
-                aria-label="add task"
+                aria-label="go to settings"
               >
                 <img src={IMAGES.settings} alt="settings" />
               </IconButton>
@@ -84,11 +96,16 @@ const Sidebar = ({ open, toggleDrawer }) => {
           <ListItem disablePadding sx={{ paddingBottom: 1 }}>
             <ListItemIcon sx={{ minWidth: 0 }}>
               <IconButton
+                component={Button}
+                onClick={() => {
+                  localStorage.setItem("token", "fake-jwt-token");
+                  window.location.reload();
+                }}
                 sx={{
                   borderRadius: "50%",
                   "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
                 }}
-                aria-label="add task"
+                aria-label="go to profile picture"
               >
                 <img src={IMAGES.avatar4} alt="profile" />
               </IconButton>

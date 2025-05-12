@@ -7,6 +7,7 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import NewTaskModal from "./components/NewTaskModal";
 import OfflineBanner from "./components/OfflineBanner";
+import axios from "./utils/axios";
 
 export default function App() {
   const [state, dispatch] = useReducer(taskReducer, [], () => {
@@ -21,10 +22,8 @@ export default function App() {
   useEffect(() => {
     if (state.tasks.length === 0) {
       const loadData = async () => {
-        const res = await fetch(
-          "https://jsonplaceholder.typicode.com/todos?_limit=12"
-        );
-        const data = await res.json();
+        const res = await axios.get("/todos?_limit=12");
+        const data = res.data;
 
         const mapped = data.map((item) => ({
           id: item.id,
@@ -90,13 +89,11 @@ export default function App() {
 
     dispatch({ type: "ADD_TASK", payload: newTask });
 
-    fetch("https://jsonplaceholder.typicode.com/todos", {
-      method: "POST",
-      body: JSON.stringify(newTask),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      await axios.post("/todos", newTask);
+    } catch (error) {
+      console.error("Failed to create task:", error);
+    }
 
     setModalOpen(false);
   };

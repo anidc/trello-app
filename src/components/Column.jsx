@@ -22,12 +22,15 @@ const Column = ({ title, tasks, droppableId, onOpenNewTaskModal, status }) => {
       sx={{
         p: 2,
         height: "max-content",
-        minHeight: "400px",
+        minHeight: "250px",
         backgroundColor: "#F8FAFC",
         border: "1px solid #E2E8F0",
         borderRadius: 8,
         "@media screen and (min-width: 960px)": {
           maxWidth: 416,
+        },
+        "@media screen and (min-width: 1400px)": {
+          minWidth: 400,
         },
       }}
     >
