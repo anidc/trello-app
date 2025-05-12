@@ -16,7 +16,7 @@ const getDotColor = (title) => {
       return "#4F46E5";
   }
 };
-const Column = ({ title, tasks, droppableId }) => {
+const Column = ({ title, tasks, droppableId, onOpenNewTaskModal, status }) => {
   return (
     <Paper
       sx={{
@@ -56,6 +56,7 @@ const Column = ({ title, tasks, droppableId }) => {
             borderRadius: "50%",
           }}
           aria-label="add task"
+          onClick={() => onOpenNewTaskModal(status)}
         >
           <AddIcon />
         </IconButton>

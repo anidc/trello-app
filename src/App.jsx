@@ -1,10 +1,11 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import Column from "./components/Column";
 import { taskReducer } from "./context/TaskReducer";
 import { Box, CssBaseline, useMediaQuery, useTheme } from "@mui/material";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import NewTaskModal from "./components/NewTaskModal";
 
 export default function App() {
   const [state, dispatch] = useReducer(taskReducer, [], () => {
@@ -71,6 +72,34 @@ export default function App() {
     setOpen((prevState) => !prevState);
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const newTaskStatusRef = useRef(null);
+
+  const handleOpenModal = (status) => {
+    newTaskStatusRef.current = status;
+    setModalOpen(true);
+  };
+
+  const handleCreateTask = async (taskData) => {
+    const newTask = {
+      id: Date.now(),
+      title: taskData.title,
+      status: newTaskStatusRef.current,
+    };
+
+    dispatch({ type: "ADD_TASK", payload: newTask });
+
+    fetch("https://jsonplaceholder.typicode.com/todos", {
+      method: "POST",
+      body: JSON.stringify(newTask),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    setModalOpen(false);
+  };
+
   return (
     <>
       <Sidebar open={open} toggleDrawer={toggleDrawer} />
@@ -102,16 +131,35 @@ export default function App() {
               },
             }}
           >
-            <Column title="To Do" tasks={grouped.todo} droppableId="todo" />
+            <Column
+              title="To Do"
+              tasks={grouped.todo}
+              droppableId="todo"
+              onOpenNewTaskModal={handleOpenModal}
+              status="todo"
+            />
             <Column
               title="In Progress"
               tasks={grouped.inprogress}
               droppableId="inprogress"
+              onOpenNewTaskModal={handleOpenModal}
+              status="inprogress"
             />
-            <Column title="Done" tasks={grouped.done} droppableId="done" />
+            <Column
+              title="Done"
+              tasks={grouped.done}
+              droppableId="done"
+              onOpenNewTaskModal={handleOpenModal}
+              status="done"
+            />
           </Box>
         </DragDropContext>
       </Box>
+      <NewTaskModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={handleCreateTask}
+      />
     </>
   );
 }
