@@ -1,32 +1,41 @@
 import React, { useEffect, useReducer, useState } from "react";
 import Column from "./components/Column";
-import { taskReducer, initialState } from "./context/TaskReducer";
+import { taskReducer } from "./context/TaskReducer";
 import { Box, CssBaseline, useMediaQuery, useTheme } from "@mui/material";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 
 export default function App() {
-  const [state, dispatch] = useReducer(taskReducer, initialState);
+  const [state, dispatch] = useReducer(taskReducer, [], () => {
+    const stored = localStorage.getItem("tasks");
+    return stored ? { tasks: JSON.parse(stored) } : { tasks: [] };
+  });
 
   useEffect(() => {
-    const loadData = async () => {
-      const res = await fetch(
-        "https://jsonplaceholder.typicode.com/todos?_limit=12"
-      );
-      const data = await res.json();
+    localStorage.setItem("tasks", JSON.stringify(state.tasks));
+  }, [state.tasks]);
 
-      const mapped = data.map((item) => ({
-        id: item.id,
-        title: item.title,
-        status: ["todo", "inprogress", "done"][item.id % 3],
-      }));
+  useEffect(() => {
+    if (state.tasks.length === 0) {
+      const loadData = async () => {
+        const res = await fetch(
+          "https://jsonplaceholder.typicode.com/todos?_limit=12"
+        );
+        const data = await res.json();
 
-      dispatch({ type: "SET_TASKS", payload: mapped });
-    };
+        const mapped = data.map((item) => ({
+          id: item.id,
+          title: item.title,
+          status: ["todo", "inprogress", "done"][item.id % 3],
+        }));
 
-    loadData();
-  }, []);
+        dispatch({ type: "SET_TASKS", payload: mapped });
+      };
+
+      loadData();
+    }
+  }, [state.tasks.length]);
 
   const grouped = {
     todo: state.tasks.filter((t) => t.status === "todo"),

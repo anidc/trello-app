@@ -187,8 +187,11 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
           src={IMAGES.projectxLogo}
           alt="logo"
           sx={{
-            width: {
+            maxWidth: {
               xs: "64px",
+              md: "96px",
+            },
+            height: {
               md: "96px",
             },
           }}
