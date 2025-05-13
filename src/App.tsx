@@ -1,16 +1,53 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  ReactNode,
+} from "react";
 import Column from "./components/Column";
 import { taskReducer } from "./context/TaskReducer";
 import { Box, CssBaseline, useMediaQuery, useTheme } from "@mui/material";
-import { DragDropContext } from "@hello-pangea/dnd";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import NewTaskModal from "./components/NewTaskModal";
 import OfflineBanner from "./components/OfflineBanner";
 import axios from "./utils/axios";
 
-export default function App() {
-  const [state, dispatch] = useReducer(taskReducer, [], () => {
+// TYPES
+export interface Task {
+  id: number;
+  title: string;
+  status: "todo" | "inprogress" | "done";
+}
+
+interface MoveTaskPayload {
+  id: number;
+  sourceIndex: number;
+  destinationIndex: number;
+  sourceStatus: string;
+  destinationStatus: string;
+}
+
+interface State {
+  tasks: Task[];
+}
+
+type Status = Task["status"];
+
+// UTILITY
+const shuffleTasks = (tasks: Task[]): Task[] => {
+  const shuffled = [...tasks];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+export default function App(): ReactNode {
+  const [state, dispatch] = useReducer(taskReducer, [], (): State => {
     const stored = localStorage.getItem("tasks");
     return stored ? { tasks: JSON.parse(stored) } : { tasks: [] };
   });
@@ -23,15 +60,30 @@ export default function App() {
     if (state.tasks.length === 0) {
       const loadData = async () => {
         const res = await axios.get("/todos?_limit=12");
-        const data = res.data;
+        const data: any[] = res.data;
 
-        const mapped = data.map((item) => ({
-          id: item.id,
-          title: item.title,
-          status: ["todo", "inprogress", "done"][item.id % 3],
+        const tasksWithStatus: Task[] = data.map((task) => ({
+          ...task,
+          status: task.completed
+            ? "done"
+            : task.id % 3 === 0
+            ? "inprogress"
+            : "todo",
         }));
 
-        dispatch({ type: "SET_TASKS", payload: mapped });
+        const completedTasks = tasksWithStatus.filter(
+          (task) => task.status === "done"
+        );
+        const incompleteTasks = tasksWithStatus.filter(
+          (task) => task.status !== "done"
+        );
+
+        const shuffledIncomplete = shuffleTasks(incompleteTasks);
+
+        dispatch({
+          type: "SET_TASKS",
+          payload: [...completedTasks, ...shuffledIncomplete],
+        });
       };
 
       loadData();
@@ -43,48 +95,50 @@ export default function App() {
     inprogress: state.tasks.filter((t) => t.status === "inprogress"),
     done: state.tasks.filter((t) => t.status === "done"),
   };
-  const handleDragEnd = (result) => {
+
+  const handleDragEnd = (result: DropResult): void => {
     const { source, destination, draggableId } = result;
-    if (!destination || source.droppableId === destination.droppableId) return;
+    if (!destination) return;
+
+    const payload: MoveTaskPayload = {
+      id: parseInt(draggableId),
+      sourceIndex: source.index,
+      destinationIndex: destination.index,
+      sourceStatus: source.droppableId as string,
+      destinationStatus: destination.droppableId as string,
+    };
 
     dispatch({
       type: "MOVE_TASK",
-      payload: {
-        id: parseInt(draggableId),
-        status: destination.droppableId,
-      },
+      payload,
     });
   };
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [open, setOpen] = useState(!isSmallScreen);
+  const [open, setOpen] = useState<boolean>(!isSmallScreen);
 
   useEffect(() => {
-    if (isSmallScreen) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+    setOpen(!isSmallScreen);
   }, [isSmallScreen]);
 
   const toggleDrawer = () => {
     setOpen((prevState) => !prevState);
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const newTaskStatusRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const newTaskStatusRef = useRef<Status | null>(null);
 
-  const handleOpenModal = (status) => {
+  const handleOpenModal = (status: Status): void => {
     newTaskStatusRef.current = status;
     setModalOpen(true);
   };
 
-  const handleCreateTask = async (taskData) => {
-    const newTask = {
+  const handleCreateTask = async (taskData: { title: string }) => {
+    const newTask: Task = {
       id: Date.now(),
       title: taskData.title,
-      status: newTaskStatusRef.current,
+      status: newTaskStatusRef.current || "todo",
     };
 
     dispatch({ type: "ADD_TASK", payload: newTask });

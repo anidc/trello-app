@@ -2,12 +2,13 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 
-const SettingsPage = () => {
-  const logout = () => {
+const SettingsPage: React.FC = () => {
+  const logout = (): void => {
     localStorage.removeItem("token");
     localStorage.removeItem("tasks");
     window.location.href = "/";
   };
+
   return (
     <>
       <div>Settings page</div>

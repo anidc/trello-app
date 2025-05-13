@@ -6,30 +6,47 @@ import {
   DialogActions,
   Button,
   TextField,
-  MenuItem,
 } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const schema = yup.object({
-  title: yup.string().required("Title is required"),
-});
+// Tipovi za props i form data
+interface NewTaskModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: NewTaskFormData) => void;
+}
 
-const NewTaskModal = ({ open, onClose, onSubmit }) => {
+interface NewTaskFormData {
+  title: string;
+}
+
+// Yup validacija
+const schema = yup
+  .object({
+    title: yup.string().required("Title is required"),
+  })
+  .required();
+
+const NewTaskModal: React.FC<NewTaskModalProps> = ({
+  open,
+  onClose,
+  onSubmit,
+}) => {
   const {
     handleSubmit,
     control,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<NewTaskFormData>({
     resolver: yupResolver(schema),
     defaultValues: {
       title: "",
     },
   });
 
-  const submitForm = (data) => {
+  const submitForm: SubmitHandler<NewTaskFormData> = (data) => {
     onSubmit(data);
     reset();
     onClose();
@@ -54,7 +71,7 @@ const NewTaskModal = ({ open, onClose, onSubmit }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 21,
+          gap: 2,
           padding: 0,
           "& .MuiFormControl-root": {
             marginTop: 2,
@@ -94,4 +111,5 @@ const NewTaskModal = ({ open, onClose, onSubmit }) => {
     </Dialog>
   );
 };
+
 export default NewTaskModal;

@@ -3,23 +3,23 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
-  Toolbar,
-  Box,
   IconButton,
   Button,
+  Box,
 } from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Link } from "react-router-dom";
 import MENU_LIST from "../utils/menu";
 import * as IMAGES from "../utils/images";
-import TaskIcon from "@mui/icons-material/Checklist";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { Link } from "react-router-dom";
 
 const drawerWidth = 80;
 
-const Sidebar = ({ open, toggleDrawer }) => {
+type SidebarProps = {
+  open: boolean;
+  toggleDrawer: () => void;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ open, toggleDrawer }) => {
   return (
     <Drawer
       variant="permanent"
@@ -56,7 +56,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
                       borderRadius: "50%",
                       "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
                       backgroundColor:
-                        menu.link == window.location.pathname
+                        menu.link === window.location.pathname
                           ? "#F8FAFC"
                           : "transparent",
                     }}

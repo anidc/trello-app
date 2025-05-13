@@ -1,7 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-export default function RequireAuth({ children }) {
+interface RequireAuthProps {
+  children: ReactNode;
+}
+
+export default function RequireAuth({ children }: RequireAuthProps) {
   const location = useLocation();
   const token = localStorage.getItem("token");
 

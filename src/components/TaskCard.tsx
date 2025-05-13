@@ -3,7 +3,19 @@ import { Box, LinearProgress, Paper, Typography } from "@mui/material";
 import { Draggable } from "@hello-pangea/dnd";
 import * as IMAGES from "../utils/images";
 
-const TaskCard = ({ task, index }) => {
+type Task = {
+  id: number;
+  title: string;
+  status: string;
+};
+
+type TaskCardProps = {
+  task: Task;
+  index: number;
+  isLast: boolean;
+};
+
+const TaskCard: React.FC<TaskCardProps> = ({ task, index, isLast }) => {
   return (
     <Draggable draggableId={task.id.toString()} index={index}>
       {(provided) => (
@@ -17,6 +29,7 @@ const TaskCard = ({ task, index }) => {
             backgroundColor: "white",
             borderRadius: 6,
             cursor: "grab",
+            mb: isLast ? 0 : "16px",
           }}
         >
           <Typography

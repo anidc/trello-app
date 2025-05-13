@@ -1,7 +1,7 @@
 import React from "react";
 import "../index.css";
 
-const Unauthorized = () => {
+const Unauthorized: React.FC = () => {
   return (
     <div
       style={{

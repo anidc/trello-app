@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "@mui/material";
 
-const OfflineBanner = () => {
-  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+const OfflineBanner: React.FC = () => {
+  const [isOffline, setIsOffline] = useState<boolean>(!navigator.onLine);
 
   useEffect(() => {
     const handleOnline = () => setIsOffline(false);
@@ -10,6 +10,7 @@ const OfflineBanner = () => {
 
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
+
     return () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);

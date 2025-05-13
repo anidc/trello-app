@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Box,
   Breadcrumbs,
@@ -15,7 +15,13 @@ import AVATARS from "../utils/avatars";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
-const Navbar = ({ tasksLen, open, toggleDrawer }) => {
+interface NavbarProps {
+  tasksLen: number;
+  open: boolean;
+  toggleDrawer: () => void;
+}
+
+const Navbar: FC<NavbarProps> = ({ tasksLen, open, toggleDrawer }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -48,6 +54,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
           <CloseIcon sx={{ display: open ? "block" : "none" }} />
         </IconButton>
       </Box>
+
       <Box
         sx={{
           backgroundColor: "#F8FAFC",
@@ -101,6 +108,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
             <img src={IMAGES.planet} alt="planet" /> Project PlanetX
           </Typography>
         </Breadcrumbs>
+
         <Link
           underline="hover"
           sx={{
@@ -110,8 +118,14 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
             cursor: "pointer",
           }}
         >
-          <img src={IMAGES.backIcon} alt="separator" /> Back to project
+          <img
+            style={{ margin: "0 5px" }}
+            src={IMAGES.backIcon}
+            alt="separator"
+          />{" "}
+          Back To Project
         </Link>
+
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <IconButton
             sx={{
@@ -121,6 +135,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
           >
             <img src={IMAGES.searchIcon} alt="search" />
           </IconButton>
+
           <Box
             sx={{
               display: "flex",
@@ -130,7 +145,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
               margin: "0 6px",
             }}
           >
-            {visibleAvatars.map((src, index) => (
+            {visibleAvatars.map((src: string, index: number) => (
               <Avatar
                 key={index}
                 src={src}
@@ -157,9 +172,10 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
               </Avatar>
             )}
           </Box>
+
           <Button
             variant="contained"
-            endIcon={<AddIcon color="#475569" />}
+            endIcon={<AddIcon sx={{ color: "#475569" }} />}
             sx={{
               textTransform: "none",
               backgroundColor: "transparent",
@@ -179,14 +195,16 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
           </Button>
         </Box>
       </Box>
+
       <Box
         sx={{
           padding: { xs: 2, md: 4 },
+          paddingTop: { xs: "20px", md: 4 },
           paddingBottom: { xs: 0, md: "20px" },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "center",
-          gap: 2,
+          gap: "18px",
           borderBottom: { md: "1px solid #E2E8F0" },
         }}
       >
@@ -209,7 +227,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
             display: "flex",
             flexDirection: "column",
             width: "100%",
-            gap: "12px",
+            gap: { xs: "18px", md: "12px" },
           }}
         >
           <Box
@@ -222,7 +240,7 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
             <Typography
               variant="h4"
               sx={{
-                fontSize: "30px",
+                fontSize: { xs: "24px", md: "30px" },
                 fontWeight: 900,
                 letterSpacing: "-0.4px",
               }}
@@ -237,45 +255,28 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                 mt: { xs: 2, md: 0 },
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "14px",
-                  fontWeight: 700,
-                  gap: "5px",
-                }}
-              >
-                <img src={IMAGES.grid} alt="grid" />
-                Grid View
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "14px",
-                  fontWeight: 700,
-                  gap: "5px",
-                }}
-              >
-                <img src={IMAGES.sliders} alt="sliders" />
-                Filter
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "14px",
-                  lineHeight: 1.42,
-                  fontWeight: 700,
-                  gap: "5px",
-                }}
-              >
-                <img src={IMAGES.sortDescending} alt="sort" />
-                Sort
-              </Box>
+              {[
+                { img: IMAGES.grid, label: "Grid View" },
+                { img: IMAGES.sliders, label: "Filter" },
+                { img: IMAGES.sortDescending, label: "Sort" },
+              ].map(({ img, label }) => (
+                <Box
+                  key={label}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    gap: "5px",
+                  }}
+                >
+                  <img src={img} alt={label.toLowerCase()} />
+                  {label}
+                </Box>
+              ))}
             </Box>
           </Box>
+
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
@@ -291,91 +292,39 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
                 padding: 0.5,
               }}
             >
-              <Button
-                variant="contained"
-                startIcon={<img src={IMAGES.grid} alt="export" />}
-                sx={{
-                  backgroundColor: "transparent",
-                  color: "#475569",
-                  borderRadius: "20px",
-                  textTransform: "capitalize",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.42,
-                  fontWeight: 700,
-                  padding: "10px 16px",
-                  boxShadow: "none",
-                  "&:hover": {
-                    boxShadow: "none",
-                  },
-                  "& .MuiButton-icon": { marginLeft: 0 },
-                }}
-              >
-                Grid View
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<img src={IMAGES.list} alt="export" />}
-                sx={{
-                  backgroundColor: "#FFFFFF",
-                  color: "#1E293B",
-                  borderRadius: "20px",
-                  textTransform: "capitalize",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.42,
-                  fontWeight: 700,
-                  padding: "10px 16px",
-                  boxShadow: "0 4px 8px -2px rgba(23,23,23,0.1)",
-                  "&:hover": {
-                    boxShadow: "none",
-                  },
-                  "& .MuiButton-icon": { marginLeft: 0 },
-                }}
-              >
-                List View
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<img src={IMAGES.columns} alt="export" />}
-                sx={{
-                  backgroundColor: "transparent",
-                  color: "#475569",
-                  borderRadius: "20px",
-                  textTransform: "capitalize",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.42,
-                  fontWeight: 700,
-                  padding: "10px 16px",
-                  boxShadow: "none",
-                  "&:hover": {
-                    boxShadow: "none",
-                  },
-                  "& .MuiButton-icon": { marginLeft: 0 },
-                }}
-              >
-                Column View
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<img src={IMAGES.rows} alt="export" />}
-                sx={{
-                  backgroundColor: "transparent",
-                  color: "#475569",
-                  borderRadius: "20px",
-                  textTransform: "capitalize",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.42,
-                  fontWeight: 700,
-                  padding: "10px 16px",
-                  boxShadow: "none",
-                  "&:hover": {
-                    boxShadow: "none",
-                  },
-                  "& .MuiButton-icon": { marginLeft: 0 },
-                }}
-              >
-                Row View
-              </Button>
+              {[
+                { icon: IMAGES.grid, label: "Grid View", active: false },
+                { icon: IMAGES.list, label: "List View", active: true },
+                { icon: IMAGES.columns, label: "Column View", active: false },
+                { icon: IMAGES.rows, label: "Row View", active: false },
+              ].map(({ icon, label, active }) => (
+                <Button
+                  key={label}
+                  variant="contained"
+                  startIcon={<img src={icon} alt={label.toLowerCase()} />}
+                  sx={{
+                    backgroundColor: active ? "#FFFFFF" : "transparent",
+                    color: active ? "#1E293B" : "#475569",
+                    borderRadius: "20px",
+                    textTransform: "capitalize",
+                    fontSize: "0.875rem",
+                    lineHeight: 1.42,
+                    fontWeight: 700,
+                    padding: "10px 16px",
+                    boxShadow: active
+                      ? "0 4px 8px -2px rgba(23,23,23,0.1)"
+                      : "none",
+                    "&:hover": {
+                      boxShadow: "none",
+                    },
+                    "& .MuiButton-icon": { marginLeft: 0 },
+                  }}
+                >
+                  {label}
+                </Button>
+              ))}
             </Box>
+
             <Button
               variant="contained"
               endIcon={<img src={IMAGES.exportIcon} alt="export" />}
@@ -395,49 +344,51 @@ const Navbar = ({ tasksLen, open, toggleDrawer }) => {
               Export Data
             </Button>
           </Box>
+
           <Box sx={{ overflowX: "auto" }}>
             <Box
               sx={{
                 display: { xs: "flex", md: "none" },
-                minWidth: "360px",
+                minWidth: "400px",
               }}
             >
-              <Button
-                sx={{
-                  textTransform: "capitalize",
-                  fontWeight: 700,
-                  color: "#475569",
-                  padding: "13px 16px",
-                  borderBottom: "2px solid #CBD5E1",
-                  borderRadius: 0,
-                }}
-              >
-                By Status
-              </Button>
-              <Button
-                sx={{
-                  textTransform: "capitalize",
-                  fontWeight: 700,
-                  color: "#1E293B",
-                  padding: "13px 16px",
-                  borderBottom: "2px solid #4F46E5",
-                  borderRadius: 0,
-                }}
-              >
-                By Total Tasks ({tasksLen})
-              </Button>
-              <Button
-                sx={{
-                  textTransform: "capitalize",
-                  fontWeight: 700,
-                  color: "#475569",
-                  padding: "13px 16px",
-                  borderBottom: "2px solid #CBD5E1",
-                  borderRadius: 0,
-                }}
-              >
-                Tasks Due
-              </Button>
+              {[
+                { label: "By Status", active: false },
+                { label: "By Total Tasks", active: true },
+                { label: "Tasks Due", active: false },
+              ].map(({ label, active }) => (
+                <Button
+                  key={label}
+                  sx={{
+                    textTransform: "capitalize",
+                    fontWeight: 700,
+                    color: active ? "#1E293B" : "#475569",
+                    padding: "8px 16px",
+                    borderBottom: `2px solid ${active ? "#4F46E5" : "#CBD5E1"}`,
+                    borderRadius: 0,
+                    fontSize: "1rem",
+                  }}
+                >
+                  {label}
+                  {label === "By Total Tasks" && (
+                    <span
+                      style={{
+                        fontSize: "12px",
+                        lineHeight: 1.33,
+                        fontWeight: 600,
+                        color: "#4F46E5",
+                        backgroundColor: "#EEF2FF",
+                        borderRadius: "16px",
+                        padding: "3px 6px",
+                        marginLeft: "10px",
+                        border: "1px solid #A5B4FC",
+                      }}
+                    >
+                      {tasksLen}
+                    </span>
+                  )}
+                </Button>
+              ))}
             </Box>
           </Box>
         </Box>
