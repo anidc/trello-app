@@ -15,7 +15,6 @@ import NewTaskModal from "./components/NewTaskModal";
 import OfflineBanner from "./components/OfflineBanner";
 import axios from "./utils/axios";
 
-// TYPES
 export interface Task {
   id: number;
   title: string;
@@ -36,7 +35,6 @@ interface State {
 
 type Status = Task["status"];
 
-// UTILITY
 const shuffleTasks = (tasks: Task[]): Task[] => {
   const shuffled = [...tasks];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -52,40 +50,43 @@ export default function App(): ReactNode {
     return stored ? { tasks: JSON.parse(stored) } : { tasks: [] };
   });
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return !!localStorage.getItem("token");
+  });
+
+  const loadData = async () => {
+    const res = await axios.get("/todos?_limit=12");
+    const data: any[] = res.data;
+
+    const tasksWithStatus: Task[] = data.map((task) => ({
+      ...task,
+      status: task.completed
+        ? "done"
+        : task.id % 3 === 0
+        ? "inprogress"
+        : "todo",
+    }));
+
+    const completedTasks = tasksWithStatus.filter(
+      (task) => task.status === "done"
+    );
+    const incompleteTasks = tasksWithStatus.filter(
+      (task) => task.status !== "done"
+    );
+
+    const shuffledIncomplete = shuffleTasks(incompleteTasks);
+
+    dispatch({
+      type: "SET_TASKS",
+      payload: [...completedTasks, ...shuffledIncomplete],
+    });
+  };
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(state.tasks));
   }, [state.tasks]);
 
   useEffect(() => {
     if (state.tasks.length === 0) {
-      const loadData = async () => {
-        const res = await axios.get("/todos?_limit=12");
-        const data: any[] = res.data;
-
-        const tasksWithStatus: Task[] = data.map((task) => ({
-          ...task,
-          status: task.completed
-            ? "done"
-            : task.id % 3 === 0
-            ? "inprogress"
-            : "todo",
-        }));
-
-        const completedTasks = tasksWithStatus.filter(
-          (task) => task.status === "done"
-        );
-        const incompleteTasks = tasksWithStatus.filter(
-          (task) => task.status !== "done"
-        );
-
-        const shuffledIncomplete = shuffleTasks(incompleteTasks);
-
-        dispatch({
-          type: "SET_TASKS",
-          payload: [...completedTasks, ...shuffledIncomplete],
-        });
-      };
-
       loadData();
     }
   }, [state.tasks.length]);
@@ -152,9 +153,24 @@ export default function App(): ReactNode {
     setModalOpen(false);
   };
 
+  const handleProfileClick = async () => {
+    if (isLoggedIn) return;
+    try {
+      localStorage.setItem("token", "fake-jwt-token");
+      loadData();
+      setIsLoggedIn(true);
+    } catch (err) {
+      console.error("Failed to fetch user profile:", err);
+    }
+  };
+
   return (
     <>
-      <Sidebar open={open} toggleDrawer={toggleDrawer} />
+      <Sidebar
+        open={open}
+        toggleDrawer={toggleDrawer}
+        onProfileClick={handleProfileClick}
+      />
       <CssBaseline />
       <OfflineBanner />
       <Box sx={{ marginLeft: { md: "80px" } }}>
@@ -190,6 +206,7 @@ export default function App(): ReactNode {
               droppableId="todo"
               onOpenNewTaskModal={handleOpenModal}
               status="todo"
+              isLoggedIn={isLoggedIn}
             />
             <Column
               title="In Progress"
@@ -197,6 +214,7 @@ export default function App(): ReactNode {
               droppableId="inprogress"
               onOpenNewTaskModal={handleOpenModal}
               status="inprogress"
+              isLoggedIn={isLoggedIn}
             />
             <Column
               title="Completed"
@@ -204,6 +222,7 @@ export default function App(): ReactNode {
               droppableId="done"
               onOpenNewTaskModal={handleOpenModal}
               status="done"
+              isLoggedIn={isLoggedIn}
             />
           </Box>
         </DragDropContext>

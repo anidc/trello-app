@@ -18,6 +18,7 @@ interface ColumnProps {
   droppableId: string;
   onOpenNewTaskModal: (status: Status) => void;
   status: Status;
+  isLoggedIn: boolean;
 }
 const getDotColor = (title: string): string => {
   switch (title.toLowerCase()) {
@@ -38,6 +39,7 @@ const Column: React.FC<ColumnProps> = ({
   droppableId,
   onOpenNewTaskModal,
   status,
+  isLoggedIn,
 }) => {
   return (
     <Paper
@@ -68,16 +70,18 @@ const Column: React.FC<ColumnProps> = ({
           <span style={{ color: getDotColor(title) }}>•</span> {title}{" "}
           <span style={{ color: "#94A3B8" }}>({tasks.length})</span>
         </Typography>
-        <IconButton
-          sx={{
-            border: "1px solid #E2E8F0",
-            borderRadius: "50%",
-          }}
-          aria-label="add task"
-          onClick={() => onOpenNewTaskModal(status)}
-        >
-          <AddIcon />
-        </IconButton>
+        {isLoggedIn && (
+          <IconButton
+            sx={{
+              border: "1px solid #E2E8F0",
+              borderRadius: "50%",
+            }}
+            aria-label="add task"
+            onClick={() => onOpenNewTaskModal(status)}
+          >
+            <AddIcon />
+          </IconButton>
+        )}
       </Box>
       <Droppable droppableId={droppableId}>
         {(provided) => (

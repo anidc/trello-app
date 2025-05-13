@@ -11,7 +11,6 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-// Tipovi za props i form data
 interface NewTaskModalProps {
   open: boolean;
   onClose: () => void;
@@ -22,7 +21,6 @@ interface NewTaskFormData {
   title: string;
 }
 
-// Yup validacija
 const schema = yup
   .object({
     title: yup.string().required("Title is required"),
@@ -95,7 +93,10 @@ const NewTaskModal: React.FC<NewTaskModalProps> = ({
       </DialogContent>
       <DialogActions sx={{ padding: 0 }}>
         <Button
-          onClick={onClose}
+          onClick={() => {
+            reset();
+            onClose();
+          }}
           sx={{ borderRadius: 5, textTransform: "capitalize" }}
         >
           Cancel

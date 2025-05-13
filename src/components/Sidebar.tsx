@@ -17,9 +17,14 @@ const drawerWidth = 80;
 type SidebarProps = {
   open: boolean;
   toggleDrawer: () => void;
+  onProfileClick: () => void;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ open, toggleDrawer }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  open,
+  toggleDrawer,
+  onProfileClick,
+}) => {
   return (
     <Drawer
       variant="permanent"
@@ -98,8 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, toggleDrawer }) => {
               <IconButton
                 component={Button}
                 onClick={() => {
-                  localStorage.setItem("token", "fake-jwt-token");
-                  window.location.reload();
+                  onProfileClick();
                 }}
                 sx={{
                   borderRadius: "50%",
