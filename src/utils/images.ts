@@ -19,7 +19,7 @@ import backIcon from "../assets/images/back-icon.svg";
 import nameLogo from "../assets/images/name-logo.png";
 import hamburger from "../assets/images/hamburger.svg";
 import projectxLogo from "../assets/images/projectx-logo.png";
-import sliders from "../assets/images/sliders.svg";
+import sliders from "../assets/images/Sliders.svg";
 import sortDescending from "../assets/images/SortDescending.svg";
 import grid from "../assets/images/GridFour.svg";
 import exportIcon from "../assets/images/Export.svg";
